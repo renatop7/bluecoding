@@ -1,0 +1,63 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon #menuIcon class="menu-icon" slot="icon-only" name="menu">
+          </ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+
+    <ion-title>GIF Viewer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-input type="text" placeholder="Search your GIF" formControlName="search"></ion-input>
+          </ion-item>
+          <ion-button [disabled]="!form.valid" (click)="searchButtonClick()" expand="block" fill="solid" shape="round">
+            <ion-icon slot="start" name="search-outline"></ion-icon>
+            Search
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="results && results.length > 0; else emptyList">
+      <ion-col *ngFor="let gif of results; let index = index;" size="6">
+        <app-gif-thumbnail [src]="gif.images.preview_gif.url" (click)="openGifView(gif, index)">
+        </app-gif-thumbnail>
+      </ion-col>
+    </ion-row>
+    <ng-template #emptyList>
+      <ion-row>
+        <ion-col class="ion-text-center" size="12">
+          <span *ngIf="results && results.length === 0">No results</span>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar *ngIf="results">
+    <ion-buttons slot="start">
+      <ion-button (click)="previousPage()" *ngIf="!isFirstPage">
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+        Previous page
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="nextPage()" *ngIf="!isLastPage">
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        Next page
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon #menuIcon class="menu-icon" slot="icon-only" name="menu">
+          </ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearHistory()">
+        <span>CLEAR</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="searchHistory.length; else emptyList">
+      <ion-item *ngFor="let text of searchHistory">
+        <ion-label>{{ text }}</ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-template #emptyList>
+      <ion-item lines="none" class="ion-text-center">
+        <span> Search history empty </span>
+      </ion-item>
+    </ng-template>
+  </ion-list>
+</ion-content>
